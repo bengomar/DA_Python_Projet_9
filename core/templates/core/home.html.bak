@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<span class="grid-container">
+    <a href="{% url 'create_ticket' %}">Demander une critique</a>
+    <a href="{% url 'create_review' %}">Créer une critique</a>
+</span>
+    {% for ticket in tickets %}
+        <div class="post cadre">
+            <h3>{{ ticket.user }} a demandé une critique</h3>
+            <p>{{ ticket.time_created }} </p>
+            <p>{{ ticket.title }}</p>
+            <img src="{{ ticketsssss.image.url }}">MANQUE IMAGE
+            <p>{{ ticket.description }}</p>
+            <p><a href="{% url 'home' %}">Créer une critique</a></p>
+        </div>
+    {% endfor %}
+    <div class="grid-container">
+        {% for review in reviews %}
+            <div class="post cadre">
+                <a href="{% url 'view_review' review.id %}">
+                    <h4>Billet : {{ review.title }}</h4>
+                    <img src="{{ review.ticket.image.url }}">
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+
+
+{% endblock content %}

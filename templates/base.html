@@ -1,0 +1,31 @@
+{% load static %}
+<html>
+    <head>
+        <title>LITReview</title>
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+    </head>
+    <body>
+        <div class="sidebar">
+            <h1>LITReview</h1>
+            {% if user.is_authenticated %}
+                <h3>Bonjour {{ user }}</h3>
+                {% if user.profile_photo %}
+                    <img class="avatar" src={{ user.profile_photo.url }}>
+                {% else %}
+                    <img class="avatar" src="{% static 'images/default_profile.png'%}">
+                {% endif %}
+
+                <p><a href="{% url 'home' %}">Flux</a></p>
+                <p><a href="{% url 'home' %}">Posts</a></p>
+                <p><a href="{% url 'home' %}">Abonnements</a></p>
+                <p><a href="{% url 'password_change' %}">Changer le mot de passe</a></p>
+                <p><a href="{% url 'upload_profile_photo' %}">Changer la photo de profil</a></p>
+
+                <p><a href="{% url 'logout' %}">Se déconnecter</a></p>
+            {% endif %}
+        </div>
+        <div class="main">
+            {% block content %}{% endblock content %}
+        </div>
+    </body>
+</html>
