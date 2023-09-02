@@ -5,13 +5,27 @@
     <a href="{% url 'create_review' %}">Créer une critique</a>
 </span>
     {% for post in posts %}
-        <div class="post cadre">
-            <h3>{{ post.user }} a demandé une critique</h3>
-            <p>{{ post.time_created }} </p>
-            <p>{{ post.title }}</p>
-            <img src="{{ postss.image.url }}">MANQUE IMAGE
-            <p>{{ post.description }}</p>
-            <p><a href="{% url 'home' %}">Créer une critique</a></p>
-        </div>
+        {% if post.content_type == 'TICKET' %}
+            <div class="post cadre">
+                <h3>{{ post.user }} a demandé une critique</h3>
+                <p>{{ post.time_created }} </p>
+                <p>{{ post.title }}</p>
+                <img src="{{ post.image.url }}">MANQUE IMAGE
+                <p>{{ post.description }}</p>
+                <p><a href="{% url 'home' %}">Créer une critique</a></p>
+            </div>
+        {% elif post.content_type == 'REVIEW' %}
+            <div class="post cadre">
+                <h3>{{ post.user }} a publier une critique</h3>
+                <p>{{ post.time_created }} </p>
+                <p>{{ post.headline }} - {{ post.rating }}</p>
+                <p>{{ post.body }}</p>
+            </div>
+            </div class="post cadre">
+                <p>{{ post.user }}</p>
+                <p>{{ post.title }}</p>
+                <img src="{{ post.photo.url }}">MANQUE IMAGE
+            </div>
+        {% endif %}
     {% endfor %}
 {% endblock content %}

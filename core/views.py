@@ -1,5 +1,4 @@
 from itertools import chain
-from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import CharField, Value
 from django.shortcuts import redirect, render
@@ -46,15 +45,15 @@ def create_review(request):
     ticket_form = TicketForm()
     review_form = ReviewForm()
     if request.method == 'POST':
-        review_form = TicketForm(request.POST)
         ticket_form = TicketForm(request.POST, request.FILES)
+        review_form = TicketForm(request.POST)
         if all([review_form.is_valid(), ticket_form.is_valid()]):
             ticket = ticket_form.save(commit=False)
             ticket.user = request.user
-            ticket.save()
+            # ticket.save()
             review = review_form.save(commit=False)
             review.user = request.user
-            review.ticket = ticket
+            review.ticket = Ticket.objects.last()
             review.save()
             return redirect('home')
     context = {
@@ -64,7 +63,20 @@ def create_review(request):
     return render(request, 'core/create_review.html', context=context)
 
 @login_required
-def view_review(request, review_id):
-    review = get_object_or_404(Review, id=review_id)
-    return render(request, 'blog/view_review.html', {'review': review})
+def display_posts(request):
+    """
+    Display all ticket et review from user connected
+    """
+    # tickets = Ticket.objects.filter(user=request.user)
+    # tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
+    # reviews = Review.objects.filter(user=request.user)
+    reviews = Review.objects.all()
+    # reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
+    # posts = sorted(chain(reviews, tickets),
+    #                key=lambda post: post.time_created, reverse=True)
+
+    # posts = sorted(chain(reviews),
+    #                key=lambda post: post.time_created, reverse=True)
+
+    return render(request, 'core/posts.html', context={"reviews": reviews})
 

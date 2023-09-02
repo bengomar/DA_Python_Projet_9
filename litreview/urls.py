@@ -25,12 +25,13 @@ urlpatterns = [
          ),
     path('signup/', authentication.views.signup_page, name='signup'),
     path('home/', core.views.home, name='home'),
+    path('posts/', core.views.display_posts, name='posts'),
+
     # path('feed/', core.views.feed, name='feed'),
     path('ticket/create', core.views.create_ticket, name='create_ticket'),
     path('profile-photo/upload', authentication.views.upload_profile_photo,
          name='upload_profile_photo'),
     path('review/create', core.views.create_review, name='create_review'),
-    path('review/<int:review_id>', core.views.view_review, name='view_review'),
 ]
 
 if settings.DEBUG:

@@ -6,11 +6,11 @@ from PIL import Image
 
 
 class Ticket(models.Model):
-    title = models.CharField(max_length=128, verbose_name='title')
-    description = models.TextField(max_length=256, blank=True, verbose_name='description')
+    objects = models.Manager()
+    title = models.CharField(max_length=128)
+    description = models.TextField(max_length=256, blank=True)
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    image = models.ImageField(null=True, blank=True, verbose_name='image')
-
+    image = models.ImageField(null=True, blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
 
     # IMAGE_MAX_SIZE = (800, 800)
@@ -26,6 +26,7 @@ class Ticket(models.Model):
 
 
 class Review(models.Model):
+    objects = models.Manager()
     ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE)
     rating = models.PositiveSmallIntegerField(validators=[MinValueValidator(0),
                                                           MaxValueValidator(5)],
