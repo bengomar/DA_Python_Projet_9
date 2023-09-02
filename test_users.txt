@@ -1,2 +1,3 @@
 selim / Azerty32
 marro / Azerty123
+admin / admin
