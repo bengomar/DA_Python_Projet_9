@@ -1,6 +1,8 @@
 {% load static %}
-<html>
+<!DOCTYPE html>
+<html lang="fr">
     <head>
+        <meta charset="UTF-8">
         <title>LITReview</title>
         <link rel="stylesheet" href="{% static 'style.css' %}">
     </head>
@@ -17,7 +19,7 @@
 
                 <p><a href="{% url 'home' %}">Flux</a></p>
                 <p><a href="{% url 'posts' %}">Posts</a></p>
-                <p><a href="{% url 'home' %}">Abonnements</a></p>
+                <p><a href="{% url 'follow_users' %}">Abonnements</a></p>
                 <p><a href="{% url 'password_change' %}">Changer le mot de passe</a></p>
                 <p><a href="{% url 'upload_profile_photo' %}">Changer la photo de profil</a></p>
 

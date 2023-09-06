@@ -1,8 +1,7 @@
+from PIL import Image
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-
-from PIL import Image
 
 
 class Ticket(models.Model):
@@ -13,16 +12,19 @@ class Ticket(models.Model):
     image = models.ImageField(null=True, blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
 
-    # IMAGE_MAX_SIZE = (800, 800)
-    #
-    # def resize_image(self):
-    #     image = Image.open(self.image)
-    #     image.thumbnail(self.IMAGE_MAX_SIZE)
-    #     image.save(self.image.path)
-    #
-    # def save(self, *args, **kwargs):
-    #     super().save(*args, **kwargs)
-    #     self.resize_image()
+    IMAGE_MAX_SIZE = (200, 200)
+
+    def resize_image(self):
+        image = Image.open(self.image)
+        image.thumbnail(self.IMAGE_MAX_SIZE)
+        image.save(self.image.path)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.resize_image()
+
+    def __str__(self):
+        return self.title
 
 
 class Review(models.Model):
@@ -37,13 +39,18 @@ class Review(models.Model):
     body = models.TextField(max_length=4096, blank=True, verbose_name='body')
     time_created = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.ticket.title
 
-class UserFollows(models.Model):
+
+class UserFollow(models.Model):
+    objects = models.Manager()
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE,
-                             related_name='followed_by')
+                             related_name='following')
     followed_user = models.ForeignKey(to=settings.AUTH_USER_MODEL,
-                                      on_delete=models.CASCADE)
+                                      on_delete=models.CASCADE,
+                                      related_name='followed_by')
 
     class Meta:
         unique_together = ('user', 'followed_user', )

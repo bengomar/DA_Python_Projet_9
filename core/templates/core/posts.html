@@ -1,13 +1,38 @@
-{% extends 'base.html'%}
-
+{% extends 'base.html' %}
 {% block content %}
-    <h1> Affichage review</h1>
-    {% for review in reviews %}
+<span class="grid-container">
+    <a href="{% url 'create_ticket' %}">Demander une critique</a>
+    <a href="{% url 'create_review' %}">Créer une critique</a>
+</span>
+    {% for post in posts %}
+        {% if post.content_type == 'TICKET' %}
             <div class="cadre">
-                <p> {{ review.user }} a publié une critique</p>
-                <p> {{ review.time_created }}</p>
-                <p> {{ review.headline}}<p>
-                <p> {{ review.body}}</p>
+                <h3>{{ post.user }} a demandé une critique</h3>
+                <p>{{ post.time_created }} </p>
+                <p>{{ post.title }}</p>
+                <img src="{{ post.image.url }}">
+                <p>{{ post.description }}</p>
+                <p>
+                    <a href="{% url 'create_review_from_ticket' ticket=post.pk %}">Créer une critique</a>
+                    <a href="{% url 'edit_ticket' post.id %}">Modifier la demande</a>
+                </p>
             </div>
+        {% elif post.content_type == 'REVIEW' %}
+            <div class="cadre">
+                <h3>{{ post.user }} a publier une critique</h3>
+                <p>{{ post.time_created }} </p>
+                <p>{{ post.headline }} - {{ post.rating }}</p>
+                <p>{{ post.body }}</p>
+                <p>{{ post.title }}</p>
+                <p><a href="{% url 'edit_review' post.id %}">Modifier la critique</a></p>
+                <div class="cadre">
+                    <p>{{ post.ticket.user }} a demandé une critique</p>
+                    <p>{{ post.ticket.time_created }} </p>
+                    <p>{{ post.ticket.title }}</p>
+                    <img src="{{ post.ticket.image.url }}">
+                    <p>{{ post.ticket.description }}</p>
+                </div>
+            </div>
+        {% endif %}
     {% endfor %}
 {% endblock content %}

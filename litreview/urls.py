@@ -5,8 +5,15 @@ from django.urls import path
 from django.contrib.auth.views import (
     LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView)
 
-import authentication.views
-import core.views
+from authentication.views import signup_page, upload_profile_photo
+
+from core.views import (create_review_from_ticket,
+                        create_review,
+                        create_ticket,
+                        home,
+                        display_posts,
+                        follow_users, delete_follow, edit_ticket, edit_review
+                        )
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -23,16 +30,21 @@ urlpatterns = [
         template_name='authentication/password_change_done.html'),
          name='password_change_done'
          ),
-    path('signup/', authentication.views.signup_page, name='signup'),
-    path('home/', core.views.home, name='home'),
-    path('posts/', core.views.display_posts, name='posts'),
+    path('signup/', signup_page, name='signup'),
+    path('home/', home, name='home'),
+    path('posts/', display_posts, name='posts'),
 
-    # path('feed/', core.views.feed, name='feed'),
-    path('ticket/create', core.views.create_ticket, name='create_ticket'),
-    path('profile-photo/upload', authentication.views.upload_profile_photo,
+    path('ticket/create', create_ticket, name='create_ticket'),
+    path('profile-photo/upload', upload_profile_photo,
          name='upload_profile_photo'),
-    path('review/create', core.views.create_review, name='create_review'),
+    path('review-with-ticket/create', create_review, name='create_review'),
+    path('review/<ticket>/create', create_review_from_ticket, name='create_review_from_ticket'),
+    path('follow-users/', follow_users, name='follow_users'),
+    path("delete_follow/<int:user_id>", delete_follow, name="delete_follow"),
+    path("ticket/<int:ticket_id>/edit-ticket/", edit_ticket, name="edit_ticket"),
+    path("review/<int:review_id>/edit-review/", edit_review, name="edit_review"),
 ]
+
 
 if settings.DEBUG:
     urlpatterns += static(

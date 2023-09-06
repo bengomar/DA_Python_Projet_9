@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    <span class="grid-container">
+        <a href="{% url 'create_ticket' %}">Demander une critique</a>
+        <a href="{% url 'create_review' %}">Créer une critique</a>
+    </span>
+
+    <h1> Vos posts</h1>
+    {% for post in posts %}
+            <div class="cadre">
+                <p> {{ post.user }} a publié une critique</p>
+                <p> {{ post.time_created }}</p>
+                <p> {{ post.headline}}<p>
+                <p> {{ post.body}}</p>
+            </div>
+    {% endfor %}
+{% endblock content %}
