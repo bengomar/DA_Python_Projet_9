@@ -63,6 +63,11 @@ html {
      border-style:solid;
      border-color:black;
      padding: 0 10px;
-     margin-bottom: 10px
+     margin-bottom: 10px;
 
  }
+
+.citation {
+    width: 210px;
+    margin-top: 150%;
+}

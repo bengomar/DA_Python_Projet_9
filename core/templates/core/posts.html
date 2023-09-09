@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 <span class="grid-container">
-    <a href="{% url 'create_ticket' %}">Demander une critique</a>
-    <a href="{% url 'create_review' %}">Créer une critique</a>
+    <a>
+    <button onclick="location.href='{% url 'create_ticket' %}';">Demander une critique</button>
+    </a>
+    <a>
+    <button onclick="location.href='{% url 'create_review' %}';">Créer une critique</button>
+    </a>
 </span>
     {% for post in posts %}
         {% if post.content_type == 'TICKET' %}
@@ -13,8 +17,8 @@
                 <img src="{{ post.image.url }}">
                 <p>{{ post.description }}</p>
                 <p>
-                    <a href="{% url 'create_review_from_ticket' ticket=post.pk %}">Créer une critique</a>
-                    <a href="{% url 'edit_ticket' post.id %}">Modifier la demande</a>
+                    <button onclick="location.href='{% url 'create_review_from_ticket' ticket=post.pk %}';">Créer une critique</button>
+                    <button onclick="location.href='{% url 'edit_ticket' post.id %}';">Modifier la demande</button>
                 </p>
             </div>
         {% elif post.content_type == 'REVIEW' %}
@@ -24,7 +28,9 @@
                 <p>{{ post.headline }} - {{ post.rating }}</p>
                 <p>{{ post.body }}</p>
                 <p>{{ post.title }}</p>
-                <p><a href="{% url 'edit_review' post.id %}">Modifier la critique</a></p>
+                <p>
+                    <button onclick="location.href='{% url 'edit_review' post.id %}';">Modifier la critique</button>
+                </p>
                 <div class="cadre">
                     <p>{{ post.ticket.user }} a demandé une critique</p>
                     <p>{{ post.ticket.time_created }} </p>

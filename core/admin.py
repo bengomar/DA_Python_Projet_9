@@ -1,5 +1,6 @@
 from django.contrib import admin
-from core.models import Ticket, Review, UserFollow
+
+from core.models import Review, Ticket, UserFollow
 
 
 class TicketAdmin(admin.ModelAdmin):

@@ -8,7 +8,7 @@
     </head>
     <body>
         <div class="sidebar">
-            <h1>LITReview</h1>
+            <h1><a href="{% url 'home' %}">LITReview</a></h1>
             {% if user.is_authenticated %}
                 <h3>Bonjour {{ user }}</h3>
                 {% if user.profile_photo %}
@@ -24,6 +24,8 @@
                 <p><a href="{% url 'upload_profile_photo' %}">Changer la photo de profil</a></p>
 
                 <p><a href="{% url 'logout' %}">Se déconnecter</a></p>
+            {% else %}
+                 <img class="citation" src="{% static 'images/citation-winston-churchill.webp' %}">
             {% endif %}
         </div>
         <div class="main">
