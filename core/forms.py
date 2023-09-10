@@ -54,6 +54,11 @@ class UsersFollowForm(forms.ModelForm):
         model = UserFollow
         fields = ["followed_user"]
 
+    # def __init__(self, *args, **kwargs):
+    #     qs = kwargs.pop('qs')
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['followed_user'].queryset = qs
+
 
 class DeleteTicketForm(forms.Form):
     delete_ticket = forms.BooleanField(widget=forms.HiddenInput, initial=True)

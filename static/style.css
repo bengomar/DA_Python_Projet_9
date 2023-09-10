@@ -71,3 +71,11 @@ html {
     width: 210px;
     margin-top: 150%;
 }
+
+.errorlist {
+    color: red;
+}
+.rate {
+    list-style-type: none;
+    display: inline-flex;
+}

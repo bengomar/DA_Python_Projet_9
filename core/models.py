@@ -60,10 +60,11 @@ class UserFollow(models.Model):
             "followed_user",
         )
 
-    def clean(self):
-        if self.user == self.followed_user:
-            raise ValidationError("Un utilisateur ne peut pas s'abonner à lui-même.")
+    # def clean(self):
+    #     print(self.user)
+    #     print(self.followed_user)
+    #     if self.user == self.followed_user:
+    #         raise ValidationError("Un utilisateur ne peut pas s'abonner à lui-même.")
 
-    def save(self, *args, **kwargs):
-        self.clean()
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)

@@ -128,9 +128,9 @@ def follow_users(request):
             except User.DoesNotExist:
                 user = None
             # Vérification si l'utilisateur n'est pas lui-même
-            if (
-                user and user != request.user
-            ):
+            if user and user != request.user:
+                print(request.user)
+                print(user)
                 UserFollow.objects.create(user=request.user, followed_user=user)
                 return redirect("follow_users")
             else:
@@ -138,6 +138,13 @@ def follow_users(request):
                 messages.error(request, "Vous ne pouvez pas vous abonner à vous-même.")
     else:
         form = UsersFollowForm()
+
+        user_follows = UserFollow.objects.filter(user=request.user)
+        followed_users = user_follows.values_list("followed_user", flat=True)
+
+        form.fields["followed_user"].queryset = User.objects.exclude(
+            username=request.user.username
+        ).exclude(pk__in=followed_users)
 
     context["form"] = form
     context["following"] = UserFollow.objects.filter(user=request.user)
@@ -160,11 +167,10 @@ def edit_ticket(request, ticket_id):
     edit_form = TicketForm(instance=ticket)
     delete_form = DeleteTicketForm()
     if request.method == "POST":
-        if "edit_ticket" in request.POST:
-            edit_form = TicketForm(request.POST, request.FILES, instance=ticket)
-            if edit_form.is_valid():
-                edit_form.save()
-                return redirect("posts")
+        edit_form = TicketForm(request.POST, request.FILES, instance=ticket)
+        if edit_form.is_valid():
+            edit_form.save()
+            return redirect("posts")
         if "delete_ticket" in request.POST:
             delete_form = DeleteTicketForm(request.POST)
             if delete_form.is_valid():
@@ -183,11 +189,10 @@ def edit_review(request, review_id):
     edit_form = ReviewForm(instance=review)
     delete_form = DeleteReviewForm()
     if request.method == "POST":
-        if "edit_review" in request.POST:
-            edit_form = ReviewForm(request.POST, request.FILES, instance=review)
-            if edit_form.is_valid():
-                edit_form.save()
-                return redirect("posts")
+        edit_form = ReviewForm(request.POST, request.FILES, instance=review)
+        if edit_form.is_valid():
+            edit_form.save()
+            return redirect("posts")
         if "delete_review" in request.POST:
             print("Check")
             delete_form = DeleteReviewForm(request.POST)
