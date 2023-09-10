@@ -23,7 +23,21 @@
             <div class="cadre">
                 <h3>{{ post.user }} a publier une critique</h3>
                 <p>{{ post.time_created }} </p>
-                <p>{{ post.headline }} - {{ post.rating }}</p>
+                <p>{{ post.headline }} -
+                    {% if post.rating == 1 %}
+                    <span>&#x2605;</span>
+                    {% elif post.rating == 2 %}
+                    <span>&#x2605;&#x2605;</span>
+                    {% elif post.rating == 3 %}
+                    <span>&#x2605;&#x2605;&#x2605;</span>
+                    {% elif post.rating == 4 %}
+                    <span>&#x2605;&#x2605;&#x2605;&#x2605;</span>
+                    {% elif post.rating == 5 %}
+                    <span>&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</span>
+                    {% else %}
+                    <span></span>
+                    {% endif %}
+                </p>
                 <p>{{ post.body }}</p>
                 <p>{{ post.title }}</p>
                 <div class="cadre">
