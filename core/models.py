@@ -10,7 +10,7 @@ class Ticket(models.Model):
     title = models.CharField(max_length=128)
     description = models.TextField(max_length=256, blank=True)
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(null=True, blank=False)
     time_created = models.DateTimeField(auto_now_add=True)
 
     IMAGE_MAX_SIZE = (200, 200)
@@ -59,12 +59,3 @@ class UserFollow(models.Model):
             "user",
             "followed_user",
         )
-
-    # def clean(self):
-    #     print(self.user)
-    #     print(self.followed_user)
-    #     if self.user == self.followed_user:
-    #         raise ValidationError("Un utilisateur ne peut pas s'abonner à lui-même.")
-
-    # def save(self, *args, **kwargs):
-    #     super().save(*args, **kwargs)

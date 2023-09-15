@@ -7,7 +7,6 @@ User = get_user_model()
 
 
 class TicketForm(forms.ModelForm):
-    # edit_Ticket = forms.BooleanField(widget=forms.HiddenInput, initial=True)
 
     title = forms.CharField(
         widget=forms.widgets.TextInput(attrs={"placeholder": "Titre", "size": 100})
@@ -25,7 +24,6 @@ class TicketForm(forms.ModelForm):
 
 
 class ReviewForm(forms.ModelForm):
-    # edit_Review = forms.BooleanField(widget=forms.HiddenInput, initial=True)
 
     headline = forms.CharField(
         widget=forms.widgets.TextInput(attrs={"placeholder": "Titre"})
@@ -53,11 +51,6 @@ class UsersFollowForm(forms.ModelForm):
     class Meta:
         model = UserFollow
         fields = ["followed_user"]
-
-    # def __init__(self, *args, **kwargs):
-    #     qs = kwargs.pop('qs')
-    #     super().__init__(*args, **kwargs)
-    #     self.fields['followed_user'].queryset = qs
 
 
 class DeleteTicketForm(forms.Form):
